@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
       title: 'Articuno',
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
-        useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Articuno Assignment'),
     );
@@ -31,12 +30,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<Widget> containers = [
+    const ColouredContainer(),
+    const ColouredContainer()
+  ];
+  int count = 0;
 
-List<Widget> containers = [const ColouredContainer()];
   void _swapContainer() {
-    setState(() {
-      containers.add(const ColouredContainer());
-    });
+    containers.add(ColouredContainer(
+      key: Key("value $count"),
+    ));
+    containers.removeAt(0);
+    count++;
+    setState(() {});
   }
 
   @override
@@ -49,8 +55,8 @@ List<Widget> containers = [const ColouredContainer()];
         child: SingleChildScrollView(
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            child: Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: containers,
             ),
           ),
